@@ -165,6 +165,61 @@
     function toggleFullscreen() {
       player.toggleFullscreen();
     }
+      
+    function hideVideoTitle() {
+       setInterval(() => {
+       const playerIFrame = document.querySelector("iframe");
+
+       if (!playerIFrame) {
+           return;
+       }
+
+       const frameDoc = playerIFrame.contentDocument;
+
+       if (!frameDoc) {
+          return;
+       }
+
+       const title = frameDoc.querySelector('.ytp-chrome-top');
+       if (title) {
+           title.style.display = 'none';
+       }
+
+       }, 100);
+    }
+      
+        function hideSettingsMoreOptions() {
+    const playerIFrame = document.querySelector("iframe");
+
+    if (!playerIFrame) {
+      return;
+    }
+
+    const frameDoc = playerIFrame.contentDocument;
+    if (!frameDoc) {
+      return;
+    }
+
+    const s_popup = frameDoc.querySelector(".ytp-settings-menu");
+    const moreOptionsItem = selectItem(s_popup, ".ytp-menuitem", "More options");
+
+    if (moreOptionsItem) {
+      moreOptionsItem.style.display = 'none';
+    }
+  }
+
+  // helper function:
+  // select by css selector,
+  // or by selector & text
+  function selectItem(node, selector, text) {
+    if (text) {
+      const result = Array.from(node.querySelectorAll(selector))
+              .find(item => item.innerText.includes(text));
+      return result;
+    } else {
+      return node.querySelector(selector);
+    }
+  }
 
   </script>
 </html>
